@@ -1881,6 +1881,7 @@ export function initGlobalAPI (Vue: GlobalAPI) {
 首先我们来看一下 `Vue.set/$set` 函数，打开 `src/core/observer/index.js` 文件，找到 `set` 函数，它定义在 `defineReactive` 函数的下面，如下是 `set` 函数的定义：
 
 ```js
+
 export function set (target: Array<any> | Object, key: any, val: any): any {
   // 省略...
 }
@@ -2027,7 +2028,7 @@ if (target._isVue || (ob && ob.vmCount)) {
 
 这个 `if` 语句块有两个条件，只要有一个条件成立，就会执行 `if` 语句块内的代码。我们来看第一个条件 `target._isVue`，我们知道 `Vue` 实例对象拥有 `_isVue` 属性，所以当地一个条件成立时，那么说明你正在使用 `Vue.set/$set` 函数为 `Vue` 实例对象添加属性，为了避免属性覆盖的情况出现，`Vue.set/$set` 函数不允许这么做，在非生产环境下会打印警告信息。
 
-第二个条件是：`(ob && ob.vmCount)`，我们知道 `ob` 就是 `target.__ob__` 那么 `ob.vmCount` 是什么呢？为了高清这个问题，我们回到 `observe` 工厂函数中，如下高亮代码：
+第二个条件是：`(ob && ob.vmCount)`，我们知道 `ob` 就是 `target.__ob__` 那么 `ob.vmCount` 是什么呢？为了搞清这个问题，我们回到 `observe` 工厂函数中，如下高亮代码：
 
 ```js {3-5}
 export function observe (value: any, asRootData: ?boolean): Observer | void {
